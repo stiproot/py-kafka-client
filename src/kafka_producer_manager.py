@@ -3,7 +3,7 @@ from configuration_builder import ConfigurationBuilder
 from secret_provider import SecretProvider
 
 
-class ProducerManager:
+class KafkaProducerManager:
     def __init__(self, topic: str):
         self._configuration_builder = ConfigurationBuilder()
         self._secret_provider = SecretProvider()

@@ -4,11 +4,11 @@ from configuration_builder import ConfigurationBuilder
 from secret_provider import SecretProvider
 
 
-class ConsumerManager:
-    def __init__(self, topic: str, consumer_group_id: Optional[str] = None):
+class KafkaConsumerManager:
+    def __init__(self, topic: str, consumer_group_id: str):
         self._configuration_builder = (
             ConfigurationBuilder()
-            .set_config("consumer-group-x")
+            .set_group_id(consumer_group_id)
             .set_offset_reset("earliest")
         )
         self._secret_provider = SecretProvider()
@@ -27,18 +27,21 @@ class ConsumerManager:
         return self
 
     def manage(self):
-        # Consume messages
-        while True:
-            msg = self._consumer.poll(1.0)
-            if msg is None:
-                continue
-            if msg.error():
-                if msg.error().code() == KafkaError._PARTITION_EOF:
-                    print("End of partition reached")
+        try:
+            while True:
+                msg = self._consumer.poll(1.0)
+                if msg is None:
+                    print("no message received by consumer")
+                    continue
+                if msg.error():
+                    if msg.error().code() == KafkaError._PARTITION_EOF:
+                        print("End of partition reached")
+                    else:
+                        print(f"Error: {msg.error()}")
                 else:
-                    print(f"Error: {msg.error()}")
-            else:
-                print(f"Received message: {msg.value().decode('utf-8')}")
+                    print(f"Received message: {msg.value().decode('utf-8')}")
+        except KeyboardInterrupt:
+            self.dispose()
 
     def dispose(self):
         self._consumer.close()

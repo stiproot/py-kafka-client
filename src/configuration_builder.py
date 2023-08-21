@@ -17,5 +17,5 @@ class ConfigurationBuilder:
         self._config["auto.offset.reset"] = offset_reset
         return self
 
-    def build(self):
+    def build(self) -> dict[str, str]:
         return self._config
