@@ -9,11 +9,11 @@ payload = "{'id': 1}"
 consumer_group_id = "py_azdo_tmp_0"
 consumer = KafkaConsumerManager(topic, consumer_group_id).init().subscribe()
 
-if __name__ == "__main__":
-    producer.produce("id", payload)
-    producer.flush()
+# if __name__ == "__main__":
+#     producer.produce("id", payload)
+#     producer.flush()
 
-    consumer.manage()
+#     consumer.manage()
 
 
 # async def main():
