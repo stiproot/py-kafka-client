@@ -1,6 +1,5 @@
-# import asyncio
-from kafka_producer_manager import KafkaProducerManager
-from kafka_consumer_manager import KafkaConsumerManager
+from pyxi_kafka_client.kafka_producer_manager import KafkaProducerManager
+from pyxi_kafka_client.kafka_consumer_manager import KafkaConsumerManager
 
 topic = "topic_py_azdo_tmp_0"
 producer = KafkaProducerManager(topic).init()

@@ -1,7 +1,7 @@
 from typing import Optional
 from confluent_kafka import Consumer, KafkaError
-from configuration_builder import ConfigurationBuilder
-from secret_provider import SecretProvider
+from .configuration_builder import ConfigurationBuilder
+from .secret_provider import SecretProvider
 
 
 class KafkaConsumerManager:

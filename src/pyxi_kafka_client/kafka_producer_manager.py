@@ -1,6 +1,6 @@
 from confluent_kafka import Consumer, Producer, KafkaError
-from configuration_builder import ConfigurationBuilder
-from secret_provider import SecretProvider
+from .configuration_builder import ConfigurationBuilder
+from .secret_provider import SecretProvider
 
 
 class KafkaProducerManager:
