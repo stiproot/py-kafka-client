@@ -26,6 +26,9 @@ class KafkaConsumerManager:
         self._consumer.subscribe([self._topic])
         return self
 
+    def poll(self, timeout: Optional[int] = 1):
+        return self._consumer.poll(timeout)
+
     def manage(self):
         try:
             while True:
