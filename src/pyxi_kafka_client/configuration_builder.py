@@ -1,9 +1,10 @@
+from typing import Optional
 from confluent_kafka import Consumer, KafkaError
 
 
 class ConfigurationBuilder:
-    def __init__(self):
-        self._config = {}
+    def __init__(self, base_configuration: Optional[dict[str, str]] = {}):
+        self._config = base_configuration
 
     def set_bootstrap_servers(self, bootstrap_servers):
         self._config["bootstrap.servers"] = bootstrap_servers

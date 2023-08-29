@@ -6,18 +6,20 @@ from .secret_provider import SecretProvider
 
 class KafkaConsumerManager:
     def __init__(self, topic: str, consumer_group_id: str):
-        self._configuration_builder = (
-            ConfigurationBuilder()
-            .set_group_id(consumer_group_id)
-            .set_offset_reset("earliest")
-        )
         self._secret_provider = SecretProvider()
         self._topic = topic
+        self._consumer_group_id = consumer_group_id
 
-    def init(self):
-        self._configuration = self._configuration_builder.set_bootstrap_servers(
-            self._secret_provider.get_secret("BOOTSTRAP_SERVER")
+    def init(self, configuration: Optional[dict[str, str]] = None):
+        self._configuration = (
+            ConfigurationBuilder(configuration)
+            .set_group_id(self._consumer_group_id)
+            .set_offset_reset("earliest")
         ).build()
+
+        # self._configuration = self._configuration_builder.set_bootstrap_servers(
+        #     self._secret_provider.get_secret("BOOTSTRAP_SERVER")
+        # ).build()
 
         self._consumer = Consumer(self._configuration)
         return self
